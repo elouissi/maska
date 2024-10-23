@@ -1,14 +1,14 @@
 package com.exemple;
 
-import com.exemple.config.AppConfig;
 import com.exemple.model.User;
 import com.exemple.service.UserService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class TestApp {
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(AppConfig.class);
+        // Charger la configuration XML
+        ClassPathXmlApplicationContext context =
+                new ClassPathXmlApplicationContext("applicationContext.xml");
 
         UserService userService = context.getBean(UserService.class);
 
@@ -20,9 +20,11 @@ public class TestApp {
         userService.saveUser(user);
         System.out.println("User saved: " + user);
 
+
         System.out.println("All users:");
         userService.getAllUsers().forEach(System.out::println);
 
+        // Fermer le contexte
         context.close();
     }
 }
